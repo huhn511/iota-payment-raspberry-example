@@ -1,10 +1,16 @@
 var paymentModule = require('iota-payment')
-var app = require('express')()
+const app = require('express')();
 var ps = require('python-shell')
+var path = require('path');
 
+app.get("/hello_world", function (req, res) {
+    res.send('hello world from iota-payment-raspberry-example');
+});
 
-app.get("/", function (req, res) {
-    res.send('hello world from 03_events example!');
+app.get("/create_payment", function (req, res) {
+
+    res.sendFile(path.join(__dirname + '/index.html'));
+
 });
 
 let server = paymentModule.createServer(app)
