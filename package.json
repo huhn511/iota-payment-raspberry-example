@@ -1,0 +1,16 @@
+{
+  "name": "pi-payment-provider-e-ink-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "iota-payment": "0.0.10",
+    "python-shell": "^1.0.8"
+  }
+}
