@@ -16,7 +16,13 @@
 <body>
     <h1>Create a new payment</h1>
     <div id="app">
-        <button @click="create_payment" type="button" class="btn btn-primary">Create new</button>
+        <button v-if="!sending" @click="create_payment" type="button" class="btn btn-primary">Create new</button>
+        <div v-else>
+            <div class="alert alert-success" role="alert">
+               Payment created!
+            </div>
+            <pre v-if="message">{{message}}</pre>
+        </div>
     </div>
 
     <!-- Optional JavaScript -->
@@ -35,13 +41,23 @@
     <script>
     var app = new Vue({
     el: '#app',
+    data() {
+        return {
+            sending: false,
+            message: ""
+        }
+    },
         methods:  {
             create_payment() {
-                console.log("yo")
+                let self = this;
+                this.sending = true;
 
                 fetch('/', { method: 'POST' })
                 .then(res => res.json()) // expecting a json response
-                .then(json => console.log(json));
+                .then(json => {
+                    self.sending = true;
+                    self.message = json;
+                });
             }
         }
     })

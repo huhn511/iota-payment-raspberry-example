@@ -1,6 +1,6 @@
 var paymentModule = require('iota-payment')
 const app = require('express')();
-var ps = require('python-shell')
+let { PythonShell } = require('python-shell')
 var path = require('path');
 
 app.get("/hello_world", function (req, res) {
@@ -24,12 +24,8 @@ server.listen(3000, function () {
 //Create an event handler which is called, when a payment was successfull
 var onPaymentCreated = function (payment) {
     console.log("onPaymentCreated", payment)
-    let options = {
-        scriptPath: './python/scripts',
-        args: [payment.address, payment.amount]
-    };
 
-    ps.run('show_qr_code.py', options, function (err, results) {
+    PythonShell.run('./python/scripts/show_qr_code.py', { args: [payment.address, payment.amount] }, function (err, results) {
         if (err) throw err;
         // results is an array consisting of messages collected during execution
         console.log('results: %j', results);
@@ -39,7 +35,7 @@ var onPaymentCreated = function (payment) {
 //Create an event handler which is called, when a payment was successfull
 var onPaymentSuccess = function (payment) {
     console.log("onPaymentSuccess", payment)
-    ps.run('python/scripts/show_success.py', options, function (err, results) {
+    PythonShell.run('./python/scripts/show_success.py', {}, function (err, results) {
         if (err) throw err;
         // results is an array consisting of messages collected during execution
         console.log('results: %j', results);

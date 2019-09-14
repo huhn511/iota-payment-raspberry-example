@@ -11,6 +11,7 @@ if os.path.exists(libdir):
 import logging
 from waveshare_epd import epd2in7
 import time
+from PIL import Image,ImageDraw,ImageFont
 import traceback
 
 import qrcode
@@ -18,32 +19,28 @@ import qrcode.image.pil
 
 logging.basicConfig(level=logging.DEBUG)
 
-print('Number of arguments:', len(sys.argv), 'arguments.')
-print('Argument List:', str(sys.argv))
 
 try:
-  
+
     epd = epd2in7.EPD()
     logging.info("init and Clear")
     epd.init()
     epd.Clear(0xFF)
 
     font24 = ImageFont.truetype(os.path.join(
-        picdir, 'RobotoSlab-Regular.ttc'), 24)
+        picdir, 'RobotoSlab-Regular.ttf'), 24)
     font18 = ImageFont.truetype(os.path.join(
-        picdir, 'RobotoSlab-Regular.ttc'), 18)
-
+        picdir, 'RobotoSlab-Regular.ttf'), 18)
+    
     # Drawing on the Horizontal image
     logging.info("1.Drawing on the Horizontal image...")
-    Himage = Image.new('1', (epd.height, epd.width),
-                       255)  # 255: clear the frame
+    Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
-    draw.text((60, 10), 'Thanks for the payment!', font=font24, fill=0)
-    draw.text((10, 80), 'Your payment was successfully paid.',
-              font=font18, fill=0)
-
+    draw.text((10, 0), 'Payment success!', font = font24, fill = 0)
+    
     epd.display(epd.getbuffer(Himage))
-        
+    time.sleep(2)
+    
 
 except IOError as e:
     logging.info(e)
