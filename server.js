@@ -3,7 +3,7 @@ const app = require('express')();
 let { PythonShell } = require('python-shell')
 var path = require('path');
 
-app.get("/hello_world", function (req, res) {
+app.get("/", function (req, res) {
     res.send('hello world from iota-payment-raspberry-example');
 });
 
@@ -13,7 +13,12 @@ app.get("/create_payment", function (req, res) {
 
 });
 
-let server = paymentModule.createServer(app)
+var options = {
+    mount: '/payments',
+    value: 1
+}
+
+let server = paymentModule.createServer(app, options)
 
 // Start server with iota-payment module on '/payments'
 server.listen(3000, function () {

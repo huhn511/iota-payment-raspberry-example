@@ -21,6 +21,7 @@
             <div class="alert alert-success" role="alert">
                Payment created!
             </div>
+            <p>Transfer 1 IOTA to the address on your raspberry pi!</p>
             <pre v-if="message">{{message}}</pre>
         </div>
     </div>
@@ -52,7 +53,7 @@
                 let self = this;
                 this.sending = true;
 
-                fetch('/', { method: 'POST' })
+                fetch('/payments', { method: 'POST' })
                 .then(res => res.json()) // expecting a json response
                 .then(json => {
                     self.sending = true;
