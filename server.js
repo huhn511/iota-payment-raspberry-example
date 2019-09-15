@@ -2,6 +2,7 @@ var paymentModule = require('iota-payment')
 const app = require('express')();
 let { PythonShell } = require('python-shell')
 var path = require('path');
+var ip = require("ip");
 
 app.get("/", function (req, res) {
     res.send('hello world from iota-payment-raspberry-example');
@@ -22,7 +23,7 @@ let server = paymentModule.createServer(app, options)
 
 // Start server with iota-payment module on '/payments'
 server.listen(3000, function () {
-    console.log(`Server started on http://localhost:3000 `)
+    console.log(`Server started on ${ip.address()}:3000 `)
 })
 
 
